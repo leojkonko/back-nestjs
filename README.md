@@ -21,6 +21,127 @@
   <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
+# NestJS Users API
+
+API RESTful para gerenciamento de usuários construída com NestJS, PostgreSQL (Prisma) e Redis para cache.
+
+## Funcionalidades
+
+- ✅ CRUD completo de usuários
+- ✅ Cache Redis para otimização de performance
+- ✅ Validação de dados com class-validator
+- ✅ Banco PostgreSQL com Prisma ORM
+- ✅ Arquitetura escalável e boas práticas
+
+## Endpoints da API
+
+### Usuários
+
+- `POST /api/users` - Criar usuário
+- `GET /api/users` - Listar todos os usuários
+- `GET /api/users/:id` - Buscar usuário por ID
+- `PATCH /api/users/:id` - Atualizar usuário
+- `DELETE /api/users/:id` - Remover usuário
+
+## Instalação
+
+```bash
+# Instalar dependências
+npm install
+
+# Configurar banco PostgreSQL
+# Edite o .env com suas credenciais do banco
+
+# Executar migrações
+npm run db:migrate
+
+# Gerar cliente Prisma
+npm run db:generate
+
+# Popular banco com dados de exemplo (opcional)
+npm run db:seed
+```
+
+## Variáveis de Ambiente
+
+```env
+NODE_ENV=development
+PORT=3000
+DATABASE_URL="postgresql://username:password@localhost:5432/nestjs_users_db?schema=public"
+REDIS_HOST=localhost
+REDIS_PORT=6379
+REDIS_PASSWORD=
+```
+
+## Scripts Disponíveis
+
+```bash
+# Desenvolvimento
+npm run start:dev
+
+# Build
+npm run build
+
+# Produção
+npm start:prod
+
+# Banco de dados
+npm run db:migrate    # Executar migrações
+npm run db:generate   # Gerar cliente Prisma
+npm run db:seed       # Popular com dados de exemplo
+npm run db:studio     # Abrir Prisma Studio
+npm run db:reset      # Resetar banco
+
+# Testes
+npm test
+npm run test:e2e
+```
+
+## Estrutura do Projeto
+
+```
+src/
+├── users/
+│   ├── dto/
+│   │   ├── create-user.dto.ts
+│   │   └── update-user.dto.ts
+│   ├── users.controller.ts
+│   ├── users.service.ts
+│   └── users.module.ts
+├── prisma/
+│   └── prisma.service.ts
+├── app.module.ts
+└── main.ts
+```
+
+## Exemplo de Uso
+
+### Criar usuário
+```bash
+curl -X POST http://localhost:3000/api/users \
+  -H "Content-Type: application/json" \
+  -d '{"name": "João Silva", "email": "joao@email.com", "password": "123456"}'
+```
+
+### Listar usuários
+```bash
+curl http://localhost:3000/api/users
+```
+
+### Buscar usuário por ID
+```bash
+curl http://localhost:3000/api/users/1
+```
+
+## Tecnologias
+
+- **NestJS** - Framework Node.js
+- **PostgreSQL** - Banco de dados relacional
+- **Prisma** - ORM para TypeScript
+- **Redis** - Cache em memória
+- **class-validator** - Validação de dados
+- **class-transformer** - Transformação de dados
+
 ## Description
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
