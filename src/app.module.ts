@@ -17,7 +17,7 @@ import { UsersModule } from './users/users.module';
       isGlobal: true,
       store: redisStore,
       host: process.env.REDIS_HOST || 'localhost',
-      port: parseInt(process.env.REDIS_PORT, 10) || 6379,
+      port: parseInt(process.env.REDIS_PORT || '6379', 10),
       password: process.env.REDIS_PASSWORD || undefined,
       ttl: 300,
     }),

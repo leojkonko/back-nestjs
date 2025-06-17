@@ -17,10 +17,10 @@ export class UsersService {
     const user = await this.prisma.user.create({
       data: createUserDto,
     });
-    
+
     await this.cacheManager.set(`user:${user.id}`, user, 300);
     await this.cacheManager.del('users:all');
-    
+
     return user;
   }
 
@@ -33,9 +33,9 @@ export class UsersService {
     const users = await this.prisma.user.findMany({
       orderBy: { createdAt: 'desc' },
     });
-    
+
     await this.cacheManager.set('users:all', users, 300);
-    
+
     return users;
   }
 
@@ -54,13 +54,13 @@ export class UsersService {
     }
 
     await this.cacheManager.set(`user:${id}`, user, 300);
-    
+
     return user;
   }
 
   async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
-    const existingUser = await this.findOne(id);
-    
+    await this.findOne(id);
+
     const updatedUser = await this.prisma.user.update({
       where: { id },
       data: updateUserDto,
@@ -68,13 +68,13 @@ export class UsersService {
 
     await this.cacheManager.set(`user:${id}`, updatedUser, 300);
     await this.cacheManager.del('users:all');
-    
+
     return updatedUser;
   }
 
   async remove(id: number): Promise<void> {
-    const existingUser = await this.findOne(id);
-    
+    await this.findOne(id);
+
     await this.prisma.user.delete({
       where: { id },
     });
