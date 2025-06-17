@@ -1,11 +1,14 @@
-import { IsEmail, IsOptional, IsString } from 'class-validator';
+import { IsEmail, IsOptional, IsString, MaxLength } from 'class-validator';
 
 export class UpdateUserDto {
-    @IsOptional()
-    @IsEmail()
-    email?: string;
+  // Optional email field, validates only if provided
+  @IsOptional()
+  @IsEmail({}, { message: 'Email must be valid' })
+  email?: string;
 
-    @IsOptional()
-    @IsString()
-    name?: string;
+  // Optional name field with string type and length constraints to prevent excessive input size
+  @IsOptional()
+  @IsString()
+  @MaxLength(50, { message: 'Name must be at most 50 characters' })
+  name?: string;
 }

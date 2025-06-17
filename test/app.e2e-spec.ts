@@ -8,20 +8,23 @@ describe('AppController (e2e)', () => {
   let app: INestApplication;
 
   beforeEach(async () => {
+    // Create testing module with AppController and AppService
     const moduleFixture: TestingModule = await Test.createTestingModule({
       controllers: [AppController],
       providers: [AppService],
     }).compile();
 
+    // Create Nest application instance from the compiled module
     app = moduleFixture.createNestApplication();
     await app.init();
   });
 
   afterEach(async () => {
+    // Clean up and close the app after each test
     await app.close();
   });
 
-  it('/ (GET)', () => {
+  it('/ (GET) should return "Hello World!"', () => {
     return request(app.getHttpServer())
       .get('/')
       .expect(200)

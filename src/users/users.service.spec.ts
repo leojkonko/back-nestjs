@@ -15,7 +15,6 @@ describe('UsersService', () => {
     id: 1,
     email: 'test@example.com',
     name: 'Test User',
-    password: 'password123',
     createdAt: new Date(),
     updatedAt: new Date(),
   };
@@ -65,7 +64,6 @@ describe('UsersService', () => {
       const createUserDto: CreateUserDto = {
         email: 'test@example.com',
         name: 'Test User',
-        password: 'password123',
       };
 
       mockPrismaService.user.create.mockResolvedValue(mockUser);
@@ -75,7 +73,11 @@ describe('UsersService', () => {
       expect(prismaService.user.create).toHaveBeenCalledWith({
         data: createUserDto,
       });
-      expect(cacheManager.set).toHaveBeenCalledWith(`user:${mockUser.id}`, mockUser, 300);
+      expect(cacheManager.set).toHaveBeenCalledWith(
+        `user:${mockUser.id}`,
+        mockUser,
+        300,
+      );
       expect(cacheManager.del).toHaveBeenCalledWith('users:all');
       expect(result).toEqual(mockUser);
     });
@@ -104,7 +106,11 @@ describe('UsersService', () => {
       expect(prismaService.user.findMany).toHaveBeenCalledWith({
         orderBy: { createdAt: 'desc' },
       });
-      expect(cacheManager.set).toHaveBeenCalledWith('users:all', mockUsers, 300);
+      expect(cacheManager.set).toHaveBeenCalledWith(
+        'users:all',
+        mockUsers,
+        300,
+      );
       expect(result).toEqual(mockUsers);
     });
   });

@@ -9,15 +9,16 @@ describe('UsersController', () => {
   let controller: UsersController;
   let service: UsersService;
 
+  // Mock user object to simulate service responses
   const mockUser = {
     id: 1,
     email: 'test@example.com',
     name: 'Test User',
-    password: 'password123',
     createdAt: new Date(),
     updatedAt: new Date(),
   };
 
+  // Stubbed implementation of UsersService with Jest spies
   const mockUsersService = {
     create: jest.fn(),
     findAll: jest.fn(),
@@ -26,6 +27,7 @@ describe('UsersController', () => {
     remove: jest.fn(),
   };
 
+  // Setup test module and override provider with mock service
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [UsersController],
@@ -41,16 +43,17 @@ describe('UsersController', () => {
     service = module.get<UsersService>(UsersService);
   });
 
+  // Reset mocks between tests to avoid state leakage
   afterEach(() => {
     jest.clearAllMocks();
   });
 
   describe('create', () => {
+    // Validates controller delegation to service for user creation
     it('should create a new user', async () => {
       const createUserDto: CreateUserDto = {
         email: 'test@example.com',
         name: 'Test User',
-        password: 'password123',
       };
 
       mockUsersService.create.mockResolvedValue(mockUser);
@@ -63,6 +66,7 @@ describe('UsersController', () => {
   });
 
   describe('findAll', () => {
+    // Ensures retrieval of all users through controller
     it('should return an array of users', async () => {
       const mockUsers = [mockUser];
       mockUsersService.findAll.mockResolvedValue(mockUsers);
@@ -75,6 +79,7 @@ describe('UsersController', () => {
   });
 
   describe('findOne', () => {
+    // Verifies fetching a user by ID using controller logic
     it('should return a user by id', async () => {
       mockUsersService.findOne.mockResolvedValue(mockUser);
 
@@ -86,6 +91,7 @@ describe('UsersController', () => {
   });
 
   describe('update', () => {
+    // Tests controller's update logic with partial DTO updates
     it('should update a user', async () => {
       const updateUserDto: UpdateUserDto = {
         name: 'Updated User',
@@ -102,6 +108,7 @@ describe('UsersController', () => {
   });
 
   describe('remove', () => {
+    // Validates user deletion path through controller
     it('should remove a user', async () => {
       mockUsersService.remove.mockResolvedValue(undefined);
 

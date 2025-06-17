@@ -4,8 +4,14 @@ import { UsersController } from './users.controller';
 import { PrismaService } from '../prisma/prisma.service';
 
 @Module({
-    controllers: [UsersController],
-    providers: [UsersService, PrismaService],
-    exports: [UsersService],
+  // Registers the controller responsible for handling incoming requests
+  controllers: [UsersController],
+
+  // Registers providers (services) that contain business logic and shared resources
+  providers: [UsersService, PrismaService],
+
+  // Exports the UsersService for use in other modules (e.g., AuthModule)
+  exports: [UsersService],
 })
-export class UsersModule { }
+// Declares the UsersModule, encapsulating controller and service logic for user operations
+export class UsersModule {}

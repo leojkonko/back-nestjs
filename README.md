@@ -23,40 +23,82 @@
 
 # NestJS Users API
 
-API RESTful para gerenciamento de usuários construída com NestJS, PostgreSQL (Prisma) e Redis para cache.
+This is a RESTful API for user management built with NestJS, PostgreSQL (using Prisma ORM), and Redis for caching.
 
-## Funcionalidades
+## Features
 
-- ✅ CRUD completo de usuários
-- ✅ Cache Redis para otimização de performance
-- ✅ Validação de dados com class-validator
-- ✅ Banco PostgreSQL com Prisma ORM
-- ✅ Arquitetura escalável e boas práticas
+-   ✅  Complete User CRUD operations
+-   ✅  Redis Cache for performance optimization
+-   ✅  Data validation with `class-validator`
+-   ✅  PostgreSQL database with Prisma ORM
+-   ✅  Scalable architecture and best practices applied
 
-## Endpoints da API
+## Technologies Used
 
-### Usuários
+-   **NestJS**: A progressive Node.js framework for building efficient and scalable server-side applications.
+-   **PostgreSQL**: A powerful, open-source relational database system.
+-   **Prisma**: A next-generation ORM for Node.js and TypeScript.
+-   **Redis**: An open-source, in-memory data structure store used as a cache.
+-   **class-validator**: A library for declarative validation of DTOs.
+-   **class-transformer**: A library for transforming plain objects to class instances.
 
-- `POST /api/users` - Criar usuário
-- `GET /api/users` - Listar todos os usuários
-- `GET /api/users/:id` - Buscar usuário por ID
-- `PATCH /api/users/:id` - Atualizar usuário
-- `DELETE /api/users/:id` - Remover usuário
+## API Endpoints
 
-## Instalação
+### Users
 
-```bash
-# Instalar dependências
-npm install
+-   `POST /api/users` - Create a new user
+-   `GET /api/users` - Retrieve a list of all users
+-   `GET /api/users/:id` - Retrieve a single user by ID
+-   `PATCH /api/users/:id` - Update specific fields of a user by ID
+-   `DELETE /api/users/:id` - Delete a user by ID
 
-# Configurar variáveis de ambiente
-cp .env.example .env
-# Edite o .env com suas credenciais do banco e Redis
-```
+## Getting Started
 
-## Setup do Banco de Dados
+### Prerequisites
 
-### Opção 1: Setup Automatizado (Recomendado)
+Ensure you have the following installed:
+
+-   Node.js (LTS version recommended)
+-   npm or Yarn
+-   PostgreSQL
+-   Redis
+
+### Installation
+
+1.  **Clone the repository:**
+    ```bash
+    git clone <repository-url>
+    cd back-nestjs
+    ```
+
+2.  **Install dependencies:**
+    ```bash
+    npm install
+    ```
+
+3.  **Configure Environment Variables:**
+    Create a `.env` file by copying the example:
+    ```bash
+    cp .env.example .env
+    ```
+    Then, edit the `.env` file with your database and Redis credentials.
+
+    ```env
+    NODE_ENV=development
+    PORT=3000
+    DATABASE_URL="postgresql://username:password@localhost:5432/nestjs_users_db?schema=public"
+    REDIS_HOST=localhost
+    REDIS_PORT=6379
+    REDIS_PASSWORD=
+    ```
+
+## Database Setup
+
+You have a few options to set up your database:
+
+### Option 1: Automated Setup (Recommended)
+
+This script will generate the Prisma client, run migrations, and seed the database with example data.
 
 **Windows (PowerShell):**
 ```bash
@@ -68,86 +110,75 @@ npm run setup:windows
 npm run setup:unix
 ```
 
-### Opção 2: Setup Manual
+### Option 2: Manual Setup
 
+If you prefer a step-by-step manual setup:
+
+1.  **Generate Prisma Client:**
+    ```bash
+    npm run db:generate
+    ```
+
+2.  **Execute Migrations:**
+    ```bash
+    npm run db:migrate
+    ```
+
+3.  **Seed with Example Data:**
+    ```bash
+    npm run db:seed
+    ```
+
+### Option 3: Direct SQL Setup
+
+If you prefer to execute SQL directly:
+
+Execute the `scripts/init-database.sql` file using your PostgreSQL client:
 ```bash
-# 1. Gerar cliente Prisma
-npm run db:generate
-
-# 2. Executar migrações
-npm run db:migrate
-
-# 3. Popular com dados de exemplo
-npm run db:seed
-```
-
-### Opção 3: Setup com SQL Direto
-
-Se preferir executar o SQL manualmente no PostgreSQL:
-
-```bash
-# Execute o script SQL no seu cliente PostgreSQL
 psql -U postgres -d nestjs_users_db -f scripts/init-database.sql
-
-# Ou use o script npm
+```
+Alternatively, use the npm script:
+```bash
 npm run db:init
 ```
 
-### Scripts de Banco Disponíveis
+## Running the Application
 
+### Development Mode
+
+Starts the application in watch mode, recompiling on changes.
 ```bash
-# Setup completo
-npm run db:setup         # Gerar + migrar + popular
-
-# Comandos individuais
-npm run db:generate      # Gerar cliente Prisma
-npm run db:migrate       # Executar migrações
-npm run db:seed          # Popular com dados
-npm run db:studio        # Abrir Prisma Studio
-npm run db:reset         # Resetar banco completo
-
-# Scripts de inicialização
-npm run db:init          # Executar SQL direto
-npm run setup:windows    # Setup automatizado (Windows)
-npm run setup:unix       # Setup automatizado (Linux/Mac)
-```
-
-## Variáveis de Ambiente
-
-```env
-NODE_ENV=development
-PORT=3000
-DATABASE_URL="postgresql://username:password@localhost:5432/nestjs_users_db?schema=public"
-REDIS_HOST=localhost
-REDIS_PORT=6379
-REDIS_PASSWORD=
-```
-
-## Scripts Disponíveis
-
-```bash
-# Desenvolvimento
 npm run start:dev
+```
 
-# Build
+### Production Mode
+
+Builds the application and starts it in production mode.
+```bash
 npm run build
+npm run start:prod
+```
 
-# Produção
-npm start:prod
+The application will be running on `http://localhost:3000/api`.
 
-# Banco de dados
-npm run db:migrate    # Executar migrações
-npm run db:generate   # Gerar cliente Prisma
-npm run db:seed       # Popular com dados de exemplo
-npm run db:studio     # Abrir Prisma Studio
-npm run db:reset      # Resetar banco
+## Running Tests
 
-# Testes
+### Unit Tests
+```bash
 npm test
+```
+
+### End-to-End Tests
+```bash
 npm run test:e2e
 ```
 
-## Estrutura do Projeto
+### Test Coverage
+```bash
+npm run test:cov
+```
+
+## Project Structure
 
 ```
 src/
@@ -164,33 +195,38 @@ src/
 └── main.ts
 ```
 
-## Exemplo de Uso
+## Usage Examples
 
-### Criar usuário
+Here are some `curl` examples to interact with the API:
+
+### Create User
 ```bash
 curl -X POST http://localhost:3000/api/users \
   -H "Content-Type: application/json" \
-  -d '{"name": "João Silva", "email": "joao@email.com"}'
+  -d '{"name": "John Doe", "email": "john.doe@example.com"}'
 ```
 
-### Listar usuários
+### List Users
 ```bash
 curl http://localhost:3000/api/users
 ```
 
-### Buscar usuário por ID
+### Get User by ID
 ```bash
 curl http://localhost:3000/api/users/1
 ```
 
-## Tecnologias
+### Update User
+```bash
+curl -X PATCH http://localhost:3000/api/users/1 \
+  -H "Content-Type: application/json" \
+  -d '{"name": "Jane Doe"}'
+```
 
-- **NestJS** - Framework Node.js
-- **PostgreSQL** - Banco de dados relacional
-- **Prisma** - ORM para TypeScript
-- **Redis** - Cache em memória
-- **class-validator** - Validação de dados
-- **class-transformer** - Transformação de dados
+### Delete User
+```bash
+curl -X DELETE http://localhost:3000/api/users/1
+```
 
 ## Description
 

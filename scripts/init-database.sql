@@ -12,7 +12,6 @@ CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,
     email VARCHAR(255) UNIQUE NOT NULL,
     name VARCHAR(255) NOT NULL,
-    password VARCHAR(255) NOT NULL,
     "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
@@ -36,10 +35,10 @@ CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);
 CREATE INDEX IF NOT EXISTS idx_users_created_at ON users("createdAt");
 
 -- Inserir dados de exemplo (opcional)
-INSERT INTO users (email, name, password) VALUES
-    ('john.doe@example.com', 'John Doe', 'password123'),
-    ('jane.smith@example.com', 'Jane Smith', 'password456'),
-    ('bob.johnson@example.com', 'Bob Johnson', 'password789')
+INSERT INTO users (email, name) VALUES
+    ('john.doe@example.com', 'John Doe'),
+    ('jane.smith@example.com', 'Jane Smith'),
+    ('bob.johnson@example.com', 'Bob Johnson')
 ON CONFLICT (email) DO NOTHING;
 
 -- Verificar criação
