@@ -49,17 +49,67 @@ API RESTful para gerenciamento de usuários construída com NestJS, PostgreSQL (
 # Instalar dependências
 npm install
 
-# Configurar banco PostgreSQL
-# Edite o .env com suas credenciais do banco
+# Configurar variáveis de ambiente
+cp .env.example .env
+# Edite o .env com suas credenciais do banco e Redis
+```
 
-# Executar migrações
-npm run db:migrate
+## Setup do Banco de Dados
 
-# Gerar cliente Prisma
+### Opção 1: Setup Automatizado (Recomendado)
+
+**Windows (PowerShell):**
+```bash
+npm run setup:windows
+```
+
+**Linux/Mac (Bash):**
+```bash
+npm run setup:unix
+```
+
+### Opção 2: Setup Manual
+
+```bash
+# 1. Gerar cliente Prisma
 npm run db:generate
 
-# Popular banco com dados de exemplo (opcional)
+# 2. Executar migrações
+npm run db:migrate
+
+# 3. Popular com dados de exemplo
 npm run db:seed
+```
+
+### Opção 3: Setup com SQL Direto
+
+Se preferir executar o SQL manualmente no PostgreSQL:
+
+```bash
+# Execute o script SQL no seu cliente PostgreSQL
+psql -U postgres -d nestjs_users_db -f scripts/init-database.sql
+
+# Ou use o script npm
+npm run db:init
+```
+
+### Scripts de Banco Disponíveis
+
+```bash
+# Setup completo
+npm run db:setup         # Gerar + migrar + popular
+
+# Comandos individuais
+npm run db:generate      # Gerar cliente Prisma
+npm run db:migrate       # Executar migrações
+npm run db:seed          # Popular com dados
+npm run db:studio        # Abrir Prisma Studio
+npm run db:reset         # Resetar banco completo
+
+# Scripts de inicialização
+npm run db:init          # Executar SQL direto
+npm run setup:windows    # Setup automatizado (Windows)
+npm run setup:unix       # Setup automatizado (Linux/Mac)
 ```
 
 ## Variáveis de Ambiente

@@ -22,7 +22,11 @@
     "db:generate": "prisma generate",
     "db:seed": "tsx prisma/seed.ts",
     "db:studio": "prisma studio",
-    "db:reset": "prisma migrate reset"
+    "db:reset": "prisma migrate reset",
+    "db:setup": "npm run db:generate && npm run db:migrate && npm run db:seed",
+    "db:init": "psql -U postgres -f scripts/init-database.sql",
+    "setup:windows": "powershell -ExecutionPolicy Bypass -File scripts/setup-database.ps1",
+    "setup:unix": "bash scripts/setup-database.sh"
   },
   "dependencies": {
     "@nestjs/cache-manager": "^3.0.1",
